@@ -1,0 +1,253 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0">
+    <title></title>
+    <style type="text/css">
+
+        @-webkit-keyframes shake {
+            0% {
+                -webkit-transform: rotate(2deg) translate3d(0, 0, 0)
+            }
+
+            50% {
+                -webkit-transform: rotate(-2deg) translate3d(0, 0, 0)
+            }
+
+            100% {
+                -webkit-transform: rotate(2deg) translate3d(0, 0, 0)
+            }
+        }
+
+        @-moz-keyframes shake {
+            0% {
+                transform: rotate(2deg) translate3d(0, 0, 0)
+            }
+
+            50% {
+                transform: rotate(-2deg) translate3d(0, 0, 0)
+            }
+
+            100% {
+                transform: rotate(2deg) translate3d(0, 0, 0)
+            }
+        }
+
+        @-ms-keyframes shake {
+            0% {
+                transform: rotate(2deg) translate3d(0, 0, 0)
+            }
+
+            50% {
+                transform: rotate(-2deg) translate3d(0, 0, 0)
+            }
+
+            100% {
+                transform: rotate(2deg) translate3d(0, 0, 0)
+            }
+        }
+
+        .red {
+            width: 300px;
+            height: 345px;
+            margin: 30px auto 0;
+            border-radius: 15px;
+            box-shadow: 1px 1px 20px #666;
+            /*position: fixed;*/
+            /*top: 50%;*/
+            /*left: 50%;*/
+            overflow: hidden;
+            /*margin-left: -150px;*/
+            /*margin-top: -172px;*/
+            transform-origin: 50% 100%;
+            -webkit-transform-origin: 50% 100%;
+        }
+
+        .red img {
+            width: 100%;
+            height: auto;
+        }
+
+        .red.shake {
+            animation: shake .2s infinite linear;
+            -webkit-animation: shake .2s infinite linear;
+        }
+
+        .windows {
+            width: 300px;
+            height: 200px;
+            position: fixed;
+            top: 50%;
+            margin-top: -100px;
+            left: 50%;
+            margin-left: -150px;
+            border-radius: 15px;
+            background: #c7c7c7;
+            display: none;
+            z-index: 11;
+        }
+
+        .text {
+            text-align: center;
+            font-size: 18px;
+            font-family: "微软雅黑";
+            vertical-align: middle;
+            padding-top: 60px;
+        }
+
+        .close {
+            width: 30px;
+            height: 30px;
+            position: absolute;
+            right: -10px;
+            top: -10px;
+            background: #c7c7c7;
+            border-radius: 50%;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.5s linear;
+            -webkit-transition: all 0.5s linear;
+            -moz-transition: all 0.5s linear;
+            -ms-transition: all 0.5s linear;
+            -o-transition: all 0.5s linear;
+        }
+
+        .close:hover {
+            transform: rotate(180deg);
+            -webkit-transform: rotate(180deg);
+            -moz-transform: rotate(180deg);
+            -ms-transform: rotate(180deg);
+            -o-transform: rotate(180deg);
+        }
+
+        .close img {
+            padding-top: 5px;
+
+        }
+
+        .opacity {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: #000;
+            opacity: 0.5;
+            filter: alpha(opacity=50);
+            z-index: 10;
+            width: 100%;
+            height: 100%;
+            display: none;
+        }
+        .main-sec {
+            width: 92%;
+            overflow: hidden;
+            padding: 0 4%;
+        }
+        .m-title {
+            width: 100%;
+            height: 15px;
+            margin-top: 10px;
+            border-bottom: 1px solid #ffb820;
+            margin-bottom: 30px;
+        }
+        .m-title h3 {
+            width: 35%;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            color: #FFDB16;
+            background: #DF3C29;
+            margin: 0 auto;
+            font-size: 1.3em;
+            font-weight: bold;
+        }
+
+        .einfo {
+            width: 92%;
+            overflow: hidden;
+            padding: 14px 4%;
+            background: #DF3C29;
+            border-radius: 20px;
+        }
+        .einfo p {
+            line-height: 24px;
+            color: #FFDB16;
+        }
+    </style>
+    <script type="text/javascript" src="js/jquery-1.4.2.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+//            var info = Math.random().toFixed(2);
+            var arr = [" 1 元", " 2 元", " 3 元", " 4 元", " 5 元"];
+//            var info =parseInt(Math.random()*arr.length);
+
+            var alerts = document.querySelector(".text");
+            //可抽奖次数
+            var clickNum = 2;
+            $(".red").click(function () {
+                $(this).addClass("shake");
+//                var info = parseInt(Math.random() * arr.length);
+                var info = parseInt(Math.random()*1000);
+                console.log(info)
+                if(info<=50){
+                    arrinfo = arr[4];
+                } else if(info>=51 && info<=100){
+                    arrinfo = arr[3];
+                }else if(info>=101 && info<=150) {
+                    arrinfo = arr[2];
+                }else if(info>=151 && info<=500) {
+                    arrinfo = arr[1];
+                }else if(info>=501) {
+                    arrinfo = arr[0];
+                }
+                if (clickNum >= 1) {
+                    //可抽奖次数减一
+                    clickNum = clickNum - 1;
+                    var timer = setTimeout(function () {
+                        $(".red").removeClass("shake");
+                        $(".windows").fadeIn();
+                        $(".opacity").fadeIn();
+                        clearInterval(timer);
+                    }, 1000);
+                    alerts.innerHTML = "恭喜您获得" + arrinfo;
+                }
+                else {
+                    $(".red").removeClass("shake");
+//                    alert("亲，抽奖次数已用光！");
+                    $(".windows").fadeIn();
+                    $(".opacity").fadeIn();
+                    alerts.innerHTML = "亲，拆红包次数已用光！" +
+                        "邀请好友成功注册典贷通可获1次拆红包机会";
+                }
+
+            });
+            /*关闭*/
+            $(".close").click(function () {
+                $(this).parent().fadeOut();
+                $(".opacity").fadeOut()
+            });
+        });
+    </script>
+</head>
+<body>
+<div class="opacity"></div>
+<div class="red"><img src="images/packet.png" style="width: 100%;height: 100%;"></div>
+<div class="windows">
+    <div class='text'></div>
+    <div class='close'>
+        <img src="images/close.png">
+    </div>
+</div>
+<div class="take" style="width: 100%;height: 40px;margin: 10px auto;"><a href="javascript:;" style="display: block;text-align: center;height: 100%;line-height:40px;">查看红包记录</a></div>
+<section class="main-sec">
+    <div class="m-title"><h3>活动说明</h3></div>
+    <div class="einfo">
+        <p>活动时间：7月1日-7月30日</p>
+        <p>注册新用户可获1次拆红包机会</p>
+        <p>邀请好友成功注册典贷通可获1次拆红包机会</p>
+    </div>
+</section>
+</body>
+</html>
